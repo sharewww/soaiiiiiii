@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Special Gift</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&family=Pacifico&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ffeef2;
+            margin: 0;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .heart-bg {
+            background-color: #ffeef2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffb6c1' fill-opacity='0.4' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.37);
+        }
+
+        .btn-valentine {
+            background: #ff4d6d;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        .btn-valentine:active {
+            transform: scale(0.95);
+        }
+
+        /* Claw Machine Styles */
+        #claw-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #fffafa;
+            border: 8px solid #ff8fa3;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #claw-arm {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 50px;
+            background: #888;
+            transition: left 0.1s linear, height 0.5s ease-in-out;
+            z-index: 10;
+        }
+
+        #claw-head {
+            position: absolute;
+            bottom: -20px;
+            left: -18px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .heart-target {
+            position: absolute;
+            bottom: 10px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .paper-texture {
+            background-color: #fdfbf7;
+            background-image: url("https://www.transparenttextures.com/patterns/p6-dark.png");
+            padding: 40px 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        .paper-texture::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid #e0d5c1;
+            margin: 10px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="heart-bg">
+
+    <!-- Page 1: Pembukaan -->
+    <div id="page1" class="page active">
+        <div class="max-w-md w-full text-center space-y-12">
+            
+            <div class="flex flex-col items-center">
+                <!-- Stiker Ceri -->
+                <svg width="150" height="150" viewBox="0 0 100 100" class="floating">
+                    <circle cx="35" cy="70" r="18" fill="#ff4d6d" />
+                    <circle cx="65" cy="75" r="18" fill="#ff4d6d" />
+                    <path d="M35 52 Q45 30 65 30" fill="none" stroke="#4a7c44" stroke-width="4" />
+                    <path d="M65 57 Q65 30 65 30" fill="none" stroke="#4a7c44" stroke-width="4" />
+                    <path d="M65 30 L75 20 Q85 30 75 35 Z" fill="#76ba1b" />
+                </svg>
+            </div>
+
+            <button onclick="goToPage(2)" class="px-12 py-4 rounded-full btn-valentine font-bold text-xl shadow-lg transform transition active:scale-95">
+                New Messages 💌
+            </button>
+        </div>
+    </div>
+
+    <!-- Page 2: Game Heart Chaser -->
+    <div id="page2" class="page">
+        <div class="glass-card p-6 w-full max-w-sm text-center">
+            <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs mb-4 inline-block">New Messages</span>
+            <h2 class="text-4xl font-bold text-pink-600 mb-1" style="font-family: 'Dancing Script', cursive;">Heart Chaser</h2>
+            <p class="text-gray-600 mb-6 italic">Catch my heart if you can! 🐻</p>
+
+            <div id="claw-container">
+                <div id="claw-arm">
+                    <div id="claw-head">
+                        <svg viewBox="0 0 100 100" width="40" height="40">
+                            <rect x="45" y="0" width="10" height="40" fill="#888" />
+                            <path id="claw-left" d="M45 40 Q30 60 45 80" fill="none" stroke="#666" stroke-width="6" />
+                            <path id="claw-right" d="M55 40 Q70 60 55 80" fill="none" stroke="#666" stroke-width="6" />
+                        </svg>
+                    </div>
+                </div>
+                <div id="hearts-area"></div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mt-6">
+                <button onmousedown="startMove(-10)" onmouseup="stopMove()" ontouchstart="startMove(-10)" ontouchend="stopMove()" class="bg-pink-100 p-4 rounded-xl text-2xl active:bg-pink-200">⬅️</button>
+                <button onclick="dropClaw()" class="bg-red-500 p-4 rounded-xl text-white font-bold active:bg-red-600">🔴</button>
+                <button onmousedown="startMove(10)" onmouseup="stopMove()" ontouchstart="startMove(10)" ontouchend="stopMove()" class="bg-pink-100 p-4 rounded-xl text-2xl active:bg-pink-200">➡️</button>
+            </div>
+
+            <button onclick="checkWin()" id="seize-btn" class="w-full mt-4 py-3 rounded-xl btn-valentine font-bold uppercase tracking-wider hidden">
+                SEIZE MY HEART
+            </button>
+            <p id="game-status" class="mt-4 text-sm text-pink-500 font-semibold">Align the claw with the heart and press the button!</p>
+        </div>
+    </div>
+
+    <!-- Page 3: Halaman Surat -->
+    <div id="page3" class="page">
+        <div class="paper-texture text-center">
+            <h2 class="text-3xl text-pink-800 mb-6" style="font-family: 'Dancing Script', cursive;">My Dearest, Sorai ✨</h2>
+            <div class="text-left space-y-4 text-gray-800 leading-relaxed italic" style="font-family: 'Quicksand', sans-serif;">
+                <p>Thanks for make my day bright with your love. With you, every day feels like Valentine's Day.</p>
+                <p>Because of you, my days are always surrounded by things sweeter than chocolate and a bouquet of flowers.</p>
+                <p>I start thinking about you whenever i see sweet little things that i meet.</p>
+                <p class="text-right mt-8 font-bold text-pink-700">- Aileen</p>
+            </div>
+        </div>
+        <div class="mt-8 text-center px-4">
+            <p class="text-pink-600 font-semibold mb-4">Thanks for makes my day full of love ❤️</p>
+            <button onclick="goToPage(4)" class="px-10 py-3 rounded-full btn-valentine font-bold">
+                Continue →
+            </button>
+        </div>
+    </div>
+
+    <!-- Page 4: Halaman Hadiah -->
+    <div id="page4" class="page">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold text-pink-700" style="font-family: 'Dancing Script', cursive;">A Little Gift, Just For You.</h2>
+            <p class="text-gray-600 italic">One box, one heartbeat, one surprise...</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 w-full max-w-sm px-4">
+            <!-- Hadiah 1 -->
+            <div onclick="revealGift(1)" id="gift-1" class="bg-white p-6 rounded-2xl shadow-lg border-2 border-pink-100 cursor-pointer transform transition hover:scale-105 flex flex-col items-center">
+                <div class="gift-box text-5xl mb-2">🎁</div>
+                <h3 class="font-bold text-gray-400">Little Surprise I</h3>
+                <div class="hidden gift-content mt-2 text-center">
+                    <span class="text-4xl">🍫</span>
+                    <p class="text-pink-600 font-bold">Unlimited Free Choco</p>
+                </div>
+            </div>
+
+            <!-- Hadiah 2 -->
+            <div onclick="revealGift(2)" id="gift-2" class="bg-white p-6 rounded-2xl shadow-lg border-2 border-pink-100 cursor-pointer transform transition hover:scale-105 flex flex-col items-center">
+                <div class="gift-box text-5xl mb-2">🎁</div>
+                <h3 class="font-bold text-gray-400">Little Surprise II</h3>
+                <div class="hidden gift-content mt-2 text-center">
+                    <span class="text-4xl">💐</span>
+                    <p class="text-pink-600 font-bold">Unlimited Free Flowers</p>
+                </div>
+            </div>
+
+            <!-- Hadiah 3 -->
+            <div onclick="revealGift(3)" id="gift-3" class="bg-white p-6 rounded-2xl shadow-lg border-2 border-pink-100 cursor-pointer transform transition hover:scale-105 flex flex-col items-center">
+                <div class="gift-box text-5xl mb-2">🎁</div>
+                <h3 class="font-bold text-gray-400">Little Surprise III</h3>
+                <div class="hidden gift-content mt-2 text-center">
+                    <span class="text-4xl">🫂</span>
+                    <p class="text-pink-600 font-bold">Unlimited Free Hugs All The Time</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 flex space-x-4">
+            <button onclick="location.reload()" class="px-6 py-2 rounded-full border-2 border-pink-400 text-pink-600 font-bold">
+                Play Again
+            </button>
+            <button onclick="goToPage(1)" class="px-6 py-2 rounded-full btn-valentine font-bold">
+                Back to Home →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let clawPos = 50;
+        let isDropping = false;
+        let gameWon = false;
+        let moveInterval = null;
+
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            if(pageNum === 2) initGame();
+        }
+
+        function initGame() {
+            const area = document.getElementById('hearts-area');
+            area.innerHTML = '';
+            for(let i=0; i<15; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart-target';
+                h.innerHTML = '💖';
+                h.style.left = Math.random() * 80 + 10 + '%';
+                h.style.bottom = Math.random() * 20 + 'px';
+                h.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+                area.appendChild(h);
+            }
+        }
+
+        function startMove(dir) {
+            if(moveInterval) return;
+            moveInterval = setInterval(() => {
+                if(isDropping || gameWon) return;
+                clawPos = Math.max(10, Math.min(90, clawPos + (dir/5)));
+                document.getElementById('claw-arm').style.left = clawPos + '%';
+            }, 20);
+        }
+
+        function stopMove() {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        }
+
+        function dropClaw() {
+            if(isDropping || gameWon) return;
+            isDropping = true;
+            const arm = document.getElementById('claw-arm');
+            const status = document.getElementById('game-status');
+            
+            arm.style.height = '220px';
+            
+            setTimeout(() => {
+                const hearts = document.querySelectorAll('.heart-target');
+                let caught = false;
+
+                hearts.forEach(h => {
+                    const hPos = parseFloat(h.style.left);
+                    if(Math.abs(hPos - clawPos) < 8) {
+                        caught = true;
+                        h.style.transition = 'bottom 0.5s ease-in-out';
+                        h.style.bottom = '180px';
+                        h.style.zIndex = '20';
+                        setTimeout(() => h.remove(), 600);
+                    }
+                });
+
+                if(caught) {
+                    status.innerHTML = "Gotcha! ❤️";
+                    status.classList.add('text-green-500');
+                    document.getElementById('seize-btn').classList.remove('hidden');
+                    gameWon = true;
+                }
+
+                arm.style.height = '50px';
+                setTimeout(() => { isDropping = false; }, 500);
+            }, 600);
+        }
+
+        function checkWin() {
+            if(gameWon) goToPage(3);
+        }
+
+        function revealGift(num) {
+            const card = document.getElementById('gift-' + num);
+            const box = card.querySelector('.gift-box');
+            const content = card.querySelector('.gift-content');
+            const title = card.querySelector('h3');
+
+            box.classList.add('hidden');
+            title.classList.add('hidden');
+            content.classList.remove('hidden');
+            card.style.borderColor = '#ff4d6d';
+            card.style.backgroundColor = '#fff0f3';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowLeft') startMove(-10);
+            if(e.key === 'ArrowRight') startMove(10);
+            if(e.key === ' ') dropClaw();
+        });
+        window.addEventListener('keyup', stopMove);
+    </script>
+</body>
+</html>
